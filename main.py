@@ -8,7 +8,7 @@ count = 0
 sizeofdir = 0 
 #This Function will look into a directory and list out all of the entries inside
 
-def list_files(startpath,depth=1,sEntry=None):
+def list_files(startpath,depth=1,search=None):
     maxdepth = depth
     for root, dirs, files in os.walk(startpath):
         level = root.replace(startpath, '').count(os.sep)
@@ -17,7 +17,7 @@ def list_files(startpath,depth=1,sEntry=None):
             print('{}{}/'.format(indent, os.path.basename(root)))
             subindent = ' ' * 4 * (level + 1)
             for f in files:
-                read_file(root,f,sEntry)
+                read_file(root,f,search)
                 print(f'{subindent}{f}')
             if level == maxdepth:
                 for d in dirs:
@@ -26,7 +26,7 @@ def list_files(startpath,depth=1,sEntry=None):
     print("Number of file is :"+str(count))
     print("The Size is "+ str(sizeofdir)+" Mb")
     if listOfFoundFiles != None:
-        print(f"file is found : {len(listOfFoundFiles)} " + f" the search query is : -{sEntry}-")
+        print(f"file is found : {len(listOfFoundFiles)} " + f" the search query is : -{search}-")
         print('\n'.join(listOfFoundFiles))
 
 def read_file(root,file,searchFile):
@@ -40,13 +40,29 @@ def read_file(root,file,searchFile):
         analizedFiles[file_extension] +=1 
     global count 
     count += 1
-    global sizeofdir
+    global sizeofdir    
     sizeofdir += round(size/mb,2)
     if searchFile != None:
         searchword = re.compile(searchFile)
         if searchword.search(file) :
             listOfFoundFiles.append(path)
 
-    
-list_files(r"C:/Users/NABEL/Downloads",sEntry = "Gen")
+#organizer == {"filename":"extension" can be list / string}
+analizer = {'text':['.txt']}
+# for i in analizer: print(i)
+def organizer(rootpath,depth=0,organizer=dict):
+    for dirname in organizer:
+        dirpath = os.path.join(rootpath,dirname)
+        print(dirpath)
+        if not os.path.exists(dirpath):
+            os.mkdir(dirpath)
+            print(dirname)
+        else:
+            print("dictionary already found")
+            for root, dirs, files in os.walk(rootpath):
+                level = root.replace(rootpath, '').count(os.sep)
+                pass
+
+# list_files(r"C:/Users/NABEL/OneDrive/Desktop/Testing Folder",search = "text")
+organizer("C:/Users/NABEL/OneDrive/Desktop/Testing Folder",organizer=analizer)
 
