@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 
 listOfEntries=[] # currently serve no purpose
 analizedFiles={}
@@ -47,7 +48,7 @@ def read_file(root,file,searchFile):
         if searchword.search(file) :
             listOfFoundFiles.append(path)
 
-#organizer == {"filename":"extension" can be list / string}
+#organizer == {"filename":"extension" must be a list}
 analizer = {'text':['.txt']}
 # for i in analizer: print(i)
 def organizer(rootpath,depth=0,organizer=dict):
@@ -61,7 +62,19 @@ def organizer(rootpath,depth=0,organizer=dict):
             print("dictionary already found")
             for root, dirs, files in os.walk(rootpath):
                 level = root.replace(rootpath, '').count(os.sep)
-                pass
+                if level <= depth:
+                    for file in files:
+                        filepath = os.path.join(root,file)
+                        newdirpath = os.path.join(dirpath,file)
+                        for ext in organizer[dirname]:
+                            if os.path.splitext(file)[1] == ext:
+                                print('\n')
+                                print(filepath)
+                                print('Moving To Another Dir : ')
+                                shutil.move(filepath,newdirpath)
+                                print(newdirpath)
+
+
 
 # list_files(r"C:/Users/NABEL/OneDrive/Desktop/Testing Folder",search = "text")
 organizer("C:/Users/NABEL/OneDrive/Desktop/Testing Folder",organizer=analizer)
