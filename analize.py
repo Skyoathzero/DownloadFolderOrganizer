@@ -77,5 +77,4 @@ def organizer(rootpath,depth=0,organizer=dict):
 
 
 # list_files(r"C:/Users/NABEL/OneDrive/Desktop/Testing Folder",search = "text")
-organizer("C:/Users/NABEL/OneDrive/Desktop/Testing Folder",organizer=analizer)
 
