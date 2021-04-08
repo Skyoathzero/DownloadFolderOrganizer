@@ -74,7 +74,26 @@ def organizer(rootpath,depth=0,organizer=dict):
                                 shutil.move(filepath,newdirpath)
                                 print(newdirpath)
 
+def format_input(foldername,extensionlist=list):
+    organizer_input = {str(foldername):''}
+    organizer_input[str(foldername)] = [i for i in extensionlist]
+    return organizer_input
 
+def get_input():
+    isdone = False
+    name = str(input('Put in Folder Name :'))
+    list_of_extension = []
+    while isdone == False:
+        i = str(input('Enter the name of the extension to be organized, enter f to finish:'))
+        if i == 'f':
+            isdone == True
+            break
+        if i.startswith('.') == False:
+            i = '.'+i
+            list_of_extension.append(i)
+        else: list_of_extension.append(i)
+    return format_input(name,list_of_extension)
 
 # list_files(r"C:/Users/NABEL/OneDrive/Desktop/Testing Folder",search = "text")
 
+print(get_input())
