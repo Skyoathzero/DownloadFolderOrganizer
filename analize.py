@@ -34,24 +34,29 @@ def read_file(root,file,searchFile):
     mb = 1048576
     path = os.path.join(root,file)
     size = os.path.getsize(path)
+
     filename , file_extension = os.path.splitext(path)
+
     if not file_extension in analizedFiles :
         analizedFiles[file_extension] = 1
     elif file_extension in analizedFiles :
         analizedFiles[file_extension] +=1 
+
     global count 
     count += 1
     global sizeofdir    
-    sizeofdir += round(size/mb,2)
+    sizeofdir += round(size/mb,3)
+
     if searchFile != None:
         searchword = re.compile(searchFile)
-        if searchword.search(file) :
+        if searchword.search(file) == True :
             listOfFoundFiles.append(path)
 
 #organizer == {"filename":"extension" must be a list}
 analizer = {'text':['.txt']}
 # for i in analizer: print(i)
 def organizer(rootpath,depth=0,organizer=dict):
+
     for dirname in organizer:
         dirpath = os.path.join(rootpath,dirname)
         print(dirpath)
@@ -67,12 +72,22 @@ def organizer(rootpath,depth=0,organizer=dict):
                         filepath = os.path.join(root,file)
                         newdirpath = os.path.join(dirpath,file)
                         for ext in organizer[dirname]:
-                            if os.path.splitext(file)[1] == ext:
-                                print('\n')
-                                print(filepath)
-                                print('Moving To Another Dir : ')
-                                shutil.move(filepath,newdirpath)
-                                print(newdirpath)
+                            if ext.startswith('.')
+                                if os.path.splitext(file)[1] == ext:
+                                    print('\n')
+                                    print(filepath)
+                                    print('Moving To Another Dir : ')
+                                    shutil.move(filepath,newdirpath)
+                                    print(newdirpath)
+                            else: 
+                                searchword = re.compile(ext)
+                                if searchword.search(file)  == True :
+                                    print('\n')
+                                    print(filepath)
+                                    print('Moving To Another Dir : ')
+                                    shutil.move(filepath,newdirpath)
+                                    print(newdirpath)
+
 
 def format_input(foldername,extensionlist=list):
     organizer_input = {str(foldername):''}
@@ -81,19 +96,25 @@ def format_input(foldername,extensionlist=list):
 
 def get_input():
     isdone = False
+    extensionmode=True
     name = str(input('Put in Folder Name :'))
     list_of_extension = []
     while isdone == False:
-        i = str(input('Enter the name of the extension to be organized, enter f to finish:'))
+        i = str(input('Enter the name of the extension to be organized,enter a changemode to input filename that want to be organized, enter f to finish:'))
         if i == 'f':
             isdone == True
             break
-        if i.startswith('.') == False:
-            i = '.'+i
-            list_of_extension.append(i)
-        else: list_of_extension.append(i)
+        if i == 'a' :
+            extensionmode = not extensionmode
+        if i != 'a': 
+            if extensionmode == False:
+                list_of_extension.append(i)
+            if extensionmode == True:
+                if i.startswith('.') == False:
+                    i = '.'+i
+                    list_of_extension.append(i)
+                else: list_of_extension.append(i)
+            
     return format_input(name,list_of_extension)
-
-# list_files(r"C:/Users/NABEL/OneDrive/Desktop/Testing Folder",search = "text")
 
 print(get_input())
