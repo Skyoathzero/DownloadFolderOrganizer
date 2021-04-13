@@ -23,13 +23,14 @@ def list_files(startpath,depth=1,search=None):
             if level == maxdepth:
                 for d in dirs:
                     print(f'{subindent}{d}')
+                    
     print(analizedFiles)
     print("Number of file is :"+str(count))
     print("The Size is "+ str(sizeofdir)+" Mb")
     if listOfFoundFiles != None:
         print(f"file is found : {len(listOfFoundFiles)} " + f" the search query is : -{search}-")
         print('\n'.join(listOfFoundFiles))
-
+    # return analizedFiles , count , 
 def read_file(root,file,searchFile):
     mb = 1048576
     path = os.path.join(root,file)
@@ -53,7 +54,7 @@ def read_file(root,file,searchFile):
             listOfFoundFiles.append(path)
 
 #organizer == {"filename":"extension" must be a list}
-analizer = {'text':['.txt']}
+analizer = {'text':['text']}
 # for i in analizer: print(i)
 def organizer(rootpath,depth=0,organizer=dict):
 
@@ -72,7 +73,7 @@ def organizer(rootpath,depth=0,organizer=dict):
                         filepath = os.path.join(root,file)
                         newdirpath = os.path.join(dirpath,file)
                         for ext in organizer[dirname]:
-                            if ext.startswith('.')
+                            if ext.startswith('.'):
                                 if os.path.splitext(file)[1] == ext:
                                     print('\n')
                                     print(filepath)
@@ -81,7 +82,10 @@ def organizer(rootpath,depth=0,organizer=dict):
                                     print(newdirpath)
                             else: 
                                 searchword = re.compile(ext)
-                                if searchword.search(file)  == True :
+                                print(searchword)
+                                print(file)
+                                if searchword.search(file) != None:
+                                    print('Yes')
                                     print('\n')
                                     print(filepath)
                                     print('Moving To Another Dir : ')
@@ -117,4 +121,6 @@ def get_input():
             
     return format_input(name,list_of_extension)
 
-print(get_input())
+# target = r'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
+# organizerinput = {'text':['text']}
+# organizer(target,depth=1,organizer=organizerinput)
