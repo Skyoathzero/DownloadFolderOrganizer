@@ -11,18 +11,19 @@ sizeofdir = 0
 
 def list_files(startpath,depth=1,search=None):
     maxdepth = depth
+    result = """ """
     for root, dirs, files in os.walk(startpath):
         level = root.replace(startpath, '').count(os.sep)
         indent = ' ' * 4 * (level)
         if level <= maxdepth:
-            print('{}{}/'.format(indent, os.path.basename(root)))
+            result+=('{}{}/\n'.format(indent, os.path.basename(root)))
             subindent = ' ' * 4 * (level + 1)
             for f in files:
                 read_file(root,f,search)
-                print(f'{subindent}{f}')
+                result += f"{subindent}{f}\n"
             if level == maxdepth:
                 for d in dirs:
-                    print(f'{subindent}{d}')
+                    result += f"{subindent}{f}\n"
                     
     print(analizedFiles)
     print("Number of file is :"+str(count))
@@ -30,6 +31,10 @@ def list_files(startpath,depth=1,search=None):
     if listOfFoundFiles != None:
         print(f"file is found : {len(listOfFoundFiles)} " + f" the search query is : -{search}-")
         print('\n'.join(listOfFoundFiles))
+    foundfiles = '\n'.join(listOfFoundFiles)
+    numberfoundfiles = len(listOfFoundFiles)
+    
+    return result , analizedFiles , count , sizeofdir , listOfFoundFiles ,foundfiles , numberfoundfiles
     # return analizedFiles , count , 
 def read_file(root,file,searchFile):
     mb = 1048576
@@ -121,6 +126,6 @@ def get_input():
             
     return format_input(name,list_of_extension)
 
-# target = r'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
+target = r'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
 # organizerinput = {'text':['text']}
 # organizer(target,depth=1,organizer=organizerinput)

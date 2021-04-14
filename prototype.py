@@ -54,6 +54,9 @@ class Ui_MainWindow(object):
         self.printoutput = QtWidgets.QTextBrowser(self.Group)
         self.printoutput.setGeometry(QtCore.QRect(0, 30, 211, 181))
         self.printoutput.setObjectName("printoutput")
+        self.printoutput.horizontalScrollBar()
+        self.printoutput.horizontalScrollBar().setValue(0)
+        self.printoutput.setLineWrapMode(False)
 
         self.ExtensionOutput = QtWidgets.QListWidget(self.Group)
         self.ExtensionOutput.setGeometry(QtCore.QRect(220, 30, 181, 181))
@@ -128,14 +131,25 @@ class Ui_MainWindow(object):
 
     def checkprint(self):
         path = self.InsertFilepath.toPlainText()
+        self.printoutput.clear()
+        self.ExtensionOutput.clear()
         print(path)
         
         if self.AnalizeModeCheckbox.isChecked() == True:
-            result = anal.list_files(path,3,None)
-            self.printoutput.setText("test")
+            result , analizedFiles , count , sizeofdir , listOfFoundFiles ,foundfiles , numberfoundfiles = anal.list_files(path,3,None)
             self.printoutput.append(result)
+            for i in analizedFiles:
+                self.ExtensionOutput.addItem(i + ' :' + str(analizedFiles[i]))
+            self.printoutput.append('\n')
+            self.printoutput.append('|-|-|ANALIZED DATA FROM DIRECTORY|-|-|')
+            self.printoutput.append('\n')
+            self.printoutput.append('File Found In the Directory is :' + str(count))
+            self.printoutput.append(f'Directory size is {sizeofdir} MB')
             print(result)
+            print(count)
+            print(sizeofdir)
 x = 'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
