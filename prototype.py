@@ -84,10 +84,12 @@ class Ui_MainWindow(object):
         self.OrganizerTable.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.OrganizerTable.setHorizontalHeaderItem(1, item)
+        
 
         self.NewRow = QtWidgets.QPushButton(self.centralwidget)
         self.NewRow.setGeometry(QtCore.QRect(0, 200, 75, 23))
         self.NewRow.setObjectName("NewRow")
+        
 
         self.RemoveLastRow = QtWidgets.QPushButton(self.centralwidget)
         self.RemoveLastRow.setGeometry(QtCore.QRect(80, 200, 111, 23))
@@ -107,6 +109,8 @@ class Ui_MainWindow(object):
         #Logic Ui dibawah
 
         self.Run.clicked.connect(self.checkprint)
+        self.NewRow.clicked.connect(self.addrow)
+        self.RemoveLastRow.clicked.connect(self.removerow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -156,6 +160,10 @@ class Ui_MainWindow(object):
                 self.printoutput.append('\n')
                 self.printoutput.append(foundfiles)
 
+    def addrow(self):
+        print('a')
+    def removerow(self):
+        print('b')
                 
 x = 'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
 
