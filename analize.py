@@ -64,7 +64,7 @@ def read_file(root,file,searchFile):
             listOfFoundFiles.append(path)
 
 #organizer == {"filename":"extension" must be a list}
-analizer = {'text':['text']}
+organizerdict = {}
 # for i in analizer: print(i)
 def organizer(rootpath,depth=0,organizer=dict):
 
@@ -104,9 +104,7 @@ def organizer(rootpath,depth=0,organizer=dict):
 
 
 def format_input(foldername,extensionlist=list):
-    organizer_input = {str(foldername):''}
-    organizer_input[str(foldername)] = [i for i in extensionlist]
-    return organizer_input
+    organizerdict[str(foldername)] = [i for i in extensionlist ]
 
 def get_input():
     isdone = False
@@ -131,6 +129,12 @@ def get_input():
             
     return format_input(name,list_of_extension)
 
+def stringToList(string):
+    return string.split(',')
+
+format_input('a',['a','b'])
+print(organizerdict)
+print(stringToList('a,b,.exe'))
 target = r'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
 # organizerinput = {'text':['text']}
 # organizer(target,depth=1,organizer=organizerinput)

@@ -160,10 +160,21 @@ class Ui_MainWindow(object):
                 self.printoutput.append('\n')
                 self.printoutput.append(foundfiles)
 
+        if self.AnalizeModeCheckbox.isChecked() == False:
+            for row in range(int(self.OrganizerTable.rowCount())):
+                firstItem = self.OrganizerTable.item(row,0)
+                secondItem = self.OrganizerTable.item(row,1)
+                dirname , analizerQuery = firstItem.text() , secondItem.text()
+                print(dirname,analizerQuery)
+
     def addrow(self):
-        print('a')
+        rowcount = self.OrganizerTable.rowCount()
+        self.OrganizerTable.insertRow(rowcount)
+        print(rowcount)
+
     def removerow(self):
-        print('b')
+        if self.OrganizerTable.rowCount() > 0 :
+            self.OrganizerTable.removeRow(self.OrganizerTable.rowCount()-1)
                 
 x = 'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
 
