@@ -10,6 +10,11 @@ sizeofdir = 0
 #This Function will look into a directory and list out all of the entries inside
 
 def list_files(startpath,depth=1,search=None):
+    global count 
+    global sizeofdir 
+    count = 0
+    sizeofdir = 0
+    
     maxdepth = depth
     result = """ """
     for root, dirs, files in os.walk(startpath):
@@ -55,7 +60,7 @@ def read_file(root,file,searchFile):
 
     if searchFile != None:
         searchword = re.compile(searchFile)
-        if searchword.search(file) == True :
+        if searchword.search(file) != None :
             listOfFoundFiles.append(path)
 
 #organizer == {"filename":"extension" must be a list}

@@ -133,10 +133,13 @@ class Ui_MainWindow(object):
         path = self.InsertFilepath.toPlainText()
         self.printoutput.clear()
         self.ExtensionOutput.clear()
-        print(path)
-        
+        if self.SearchCheckBox.isChecked() == True:
+            searchQuery = self.Search.text()
+            print(searchQuery)
+        else: searchQuery = None
+
         if self.AnalizeModeCheckbox.isChecked() == True:
-            result , analizedFiles , count , sizeofdir , listOfFoundFiles ,foundfiles , numberfoundfiles = anal.list_files(path,3,None)
+            result , analizedFiles , count , sizeofdir , listOfFoundFiles ,foundfiles , numberfoundfiles = anal.list_files(path,3,searchQuery)
             self.printoutput.append(result)
             for i in analizedFiles:
                 self.ExtensionOutput.addItem(i + ' :' + str(analizedFiles[i]))
@@ -145,9 +148,15 @@ class Ui_MainWindow(object):
             self.printoutput.append('\n')
             self.printoutput.append('File Found In the Directory is :' + str(count))
             self.printoutput.append(f'Directory size is {sizeofdir} MB')
-            print(result)
-            print(count)
-            print(sizeofdir)
+            if self.SearchCheckBox.isChecked() ==True:
+                self.printoutput.append('\n')
+                self.printoutput.append('|-|-|SEARCHED DATA FROM DIRECTORY|-|-|')
+                self.printoutput.append('\n')
+                self.printoutput.append(f"file is found : {len(listOfFoundFiles)} " + f" the search query is : -{searchQuery}-")
+                self.printoutput.append('\n')
+                self.printoutput.append(foundfiles)
+
+                
 x = 'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
 
 if __name__ == "__main__":
