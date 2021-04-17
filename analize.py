@@ -132,9 +132,5 @@ def get_input():
 def stringToList(string):
     return string.split(',')
 
-format_input('a',['a','b'])
-print(organizerdict)
-print(stringToList('a,b,.exe'))
-target = r'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
 # organizerinput = {'text':['text']}
 # organizer(target,depth=1,organizer=organizerinput)

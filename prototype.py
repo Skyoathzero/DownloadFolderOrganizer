@@ -220,7 +220,6 @@ class Ui_MainWindow(object):
         if self.OrganizerTable.rowCount() > 0 :
             self.OrganizerTable.removeRow(self.OrganizerTable.rowCount()-1)
                 
-x = 'C:/Users/NABEL/OneDrive/Desktop/Testing Folder - Copy'
 
 if __name__ == "__main__":
     import sys
