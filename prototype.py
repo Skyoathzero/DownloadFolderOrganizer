@@ -10,6 +10,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import analize as anal
+from analize import organizerdict
+import os
+import re
+import shutil
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -134,6 +138,7 @@ class Ui_MainWindow(object):
         self.Searchlabel.setText(_translate("MainWindow", "search query"))\
 
     def checkprint(self):
+        maxdepth = self.MaxDepthSpinbox.value()
         path = self.InsertFilepath.toPlainText()
         self.printoutput.clear()
         self.ExtensionOutput.clear()
@@ -143,7 +148,7 @@ class Ui_MainWindow(object):
         else: searchQuery = None
 
         if self.AnalizeModeCheckbox.isChecked() == True:
-            result , analizedFiles , count , sizeofdir , listOfFoundFiles ,foundfiles , numberfoundfiles = anal.list_files(path,3,searchQuery)
+            result , analizedFiles , count , sizeofdir , listOfFoundFiles ,foundfiles , numberfoundfiles = anal.list_files(path,maxdepth,searchQuery)
             self.printoutput.append(result)
             for i in analizedFiles:
                 self.ExtensionOutput.addItem(i + ' :' + str(analizedFiles[i]))
@@ -161,12 +166,51 @@ class Ui_MainWindow(object):
                 self.printoutput.append(foundfiles)
 
         if self.AnalizeModeCheckbox.isChecked() == False:
+            organizerdict.clear()
             for row in range(int(self.OrganizerTable.rowCount())):
                 firstItem = self.OrganizerTable.item(row,0)
                 secondItem = self.OrganizerTable.item(row,1)
                 dirname , analizerQuery = firstItem.text() , secondItem.text()
-                print(dirname,analizerQuery)
+                anal.format_input(dirname , anal.stringToList(analizerQuery))
+            print(organizerdict)
+            self.organizer(path ,depth=maxdepth,organizer=organizerdict )
 
+    def organizer(self,rootpath,depth=0,organizer=dict):
+        self.printoutput.clear()
+        self.ExtensionOutput.clear()
+        for dirname in organizer:
+            dirpath = os.path.join(rootpath,dirname)
+            print(dirpath)
+            if not os.path.exists(dirpath):
+                os.mkdir(dirpath)
+                print(dirname)
+            else:
+                print("dictionary already found")
+                for root, dirs, files in os.walk(rootpath):
+                    level = root.replace(rootpath, '').count(os.sep)
+                    if level <= depth:
+                        for file in files:
+                            filepath = os.path.join(root,file)
+                            newdirpath = os.path.join(dirpath,file)
+                            for ext in organizer[dirname]:
+                                if ext.startswith('.'):
+                                    if os.path.splitext(file)[1] == ext:
+                                        ('\n')
+                                        self.printoutput.append(filepath)
+                                        self.printoutput.append('Moving To Another Dir : ')
+                                        shutil.move(filepath,newdirpath)
+                                        self.printoutput.append(newdirpath)
+                                else: 
+                                    searchword = re.compile(ext)
+                                    print(searchword)
+                                    print(file)
+                                    if searchword.search(file) != None:
+                                        self.printoutput.append('\n')
+                                        self.printoutput.append(filepath)
+                                        self.printoutput.append('Moving To Another Dir : ')
+                                        shutil.move(filepath,newdirpath)
+                                        self.printoutput.append(newdirpath)
+    
     def addrow(self):
         rowcount = self.OrganizerTable.rowCount()
         self.OrganizerTable.insertRow(rowcount)
