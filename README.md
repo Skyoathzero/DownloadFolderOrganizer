@@ -4,13 +4,13 @@
 -run the main.py files 
 
 **Analizing Files :**
--put in the path to your directories to the path text box <\br>
--check the 'analize mode' check box <\br>
-  -if you want to search how many files that contain the same names <\br> 
-  -insert the file names inside the text box <\br>
-  -check the 'search mode' check box <\br>
--set the max depth the script will run through the spin box <\br>  
--click the run button <\br>
+-put in the path to your directories to the path text box<\br>
+-check the 'analize mode' check box<\br>
+  -if you want to search how many files that contain the same names<\br> 
+  -insert the file names inside the text box<\br>
+  -check the 'search mode' check box<\br>
+-set the max depth the script will run through the spin box<\br>  
+-click the run button<\br>
 
 **Organizing Files**
 -put in the path to your directories to the path text box \br 
