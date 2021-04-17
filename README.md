@@ -2,6 +2,7 @@
 ## How to use :
 -install the dependencies from requirements.txt
 -run the main.py files 
+
 **Analizing Files :**
 -put in the path to your directories to the path text box 
 -check the 'analize mode' check box 
